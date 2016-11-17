@@ -25,6 +25,9 @@ http://www.tipue.com/search
                'liveDescription'        : '*',
                'liveContent'            : '*',
                'contentLocation'        : 'tipuesearch/tipuesearch_content.json',
+               'query'                  : 'q',
+               'elementInput'           : '#tipue_search_input',
+               'elementContent'         : '#tipue_search_content',
                'debug'                  : false
           
           }, options);
@@ -97,9 +100,9 @@ http://www.tipue.com/search
                {
                     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20')) || null;
                }
-               if (getURLP('q'))
+               if (getURLP(set.query))
                {
-                    $('#tipue_search_input').val(getURLP('q'));
+                    $(set.elementInput).val(getURLP(set.query));
                     getTipueSearch(0, true);
                }               
                
@@ -114,9 +117,9 @@ http://www.tipue.com/search
 
                function getTipueSearch(start, replace)
                {
-                    $('#tipue_search_content').hide();
-                    $('#tipue_search_content').html('<div class="tipue_search_spinner"><div class="tipue_search_rect1"></div><div class="tipue_search_rect2"></div><div class="rect3"></div></div>');
-                    $('#tipue_search_content').show();
+                    $(set.elementContent).hide();
+                    $(set.elementContent).html('<div class="tipue_search_spinner"><div class="tipue_search_rect1"></div><div class="tipue_search_rect2"></div><div class="rect3"></div></div>');
+                    $(set.elementContent).show();
                     
                     var out = '';
                     var results = '';
@@ -126,7 +129,7 @@ http://www.tipue.com/search
                     var c = 0;
                     found = [];
                     
-                    var d = $('#tipue_search_input').val().toLowerCase();
+                    var d = $(set.elementInput).val().toLowerCase();
                     d = $.trim(d);
                     
                     if ((d.match("^\"") && d.match("\"$")) || (d.match("^'") && d.match("'$")))
@@ -496,9 +499,9 @@ http://www.tipue.com/search
                          }
                     }                
                     
-                    $('#tipue_search_content').hide();
-                    $('#tipue_search_content').html(out);
-                    $('#tipue_search_content').slideDown(200);
+                    $(set.elementContent).hide();
+                    $(set.elementContent).html(out);
+                    $(set.elementContent).slideDown(200);
                     
                     $('#tipue_search_replaced').click(function()
                     {
